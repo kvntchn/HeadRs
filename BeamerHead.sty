@@ -1,0 +1,217 @@
+%---------------------------------------------------------------------------
+% General
+%---------------------------------------------------------------------------
+\usepackage{setspace}
+%\doublespacing
+
+%\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage[utf8]{inputenc}
+% \usepackage{lmodern}
+
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+% \setbeamerfont{item}{size*={13}{15}}
+% \setbeamerfont{item projected}{size*={12}{14}}
+% \setbeamerfont{itemize item}{size*={13}{15}}
+% \setbeamerfont{itemize subitem}{size*={12}{14}}
+% \setbeamerfont{itemize subsubitem}{size*={12}{14}}
+% \setbeamerfont{itemize/enumerate body}{size*={13}{15}}
+% \setbeamerfont{itemize/enumerate subbody}{size*={12}{14}}
+% \setbeamerfont{itemize/enumerate subsubbody}{size*={12}{14}}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+%\numberwithin{equation}{section} % Number equations within sections
+%\numberwithin{figure}{section} % Number figures within sections
+%\numberwithin{table}{section} % Number tables within sections
+
+\usepackage{multicol}
+\setlength{\columnsep}{20pt}
+\newlength\Colsep
+\usepackage{wrapfig}
+
+%---------------------------------------------------------------------------
+% Header/footer
+%---------------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
+
+%---------------------------------------------------------------------------
+% Tables, figures, images
+%---------------------------------------------------------------------------
+\usepackage{longtable}
+\usepackage{xtab, booktabs}
+\usepackage{multirow}
+
+\usepackage{tikz}% Probability trees and flow charts and the like
+\usetikzlibrary{%
+trees,
+arrows,
+shapes,
+%decoration,
+automata,
+backgrounds,
+petri}
+
+\usepackage{graphicx,grffile}
+%\graphicspath{ {file.path.here} }
+
+%---------------------------------------------------------------------------
+% Drawing die
+%---------------------------------------------------------------------------
+
+\tikzset{
+  dot hidden/.style={},
+  line hidden/.style={},
+  dot colour/.style={dot hidden/.append style={color=#1}},
+  dot colour/.default=black,
+  line colour/.style={line hidden/.append style={color=#1}},
+  line colour/.default=black
+}
+
+\usepackage{xparse}
+\NewDocumentCommand{\drawdie}{O{}m}{
+
+\begin{tikzpicture}[x=1em,y=1em,radius=0.1,#1]
+  \draw[rounded corners=0.5,line hidden] (0,0) rectangle (1,1);
+  \ifodd#2
+    \fill[dot hidden] (0.5,0.5) circle;
+  \fi
+  \ifnum#2>1
+    \fill[dot hidden] (0.2,0.2) circle;
+    \fill[dot hidden] (0.8,0.8) circle;
+   \ifnum#2>3
+     \fill[dot hidden] (0.2,0.8) circle;
+     \fill[dot hidden] (0.8,0.2) circle;
+    \ifnum#2>5
+      \fill[dot hidden] (0.8,0.5) circle;
+      \fill[dot hidden] (0.2,0.5) circle;
+     \ifnum#2>7
+       \fill[dot hidden] (0.5,0.8) circle;
+       \fill[dot hidden] (0.5,0.2) circle;
+      \fi
+    \fi
+  \fi
+\fi
+\end{tikzpicture}
+}
+
+%---------------------------------------------------------------------------
+% Code chunks
+%---------------------------------------------------------------------------
+\usepackage{listings} % for code
+\usepackage{color}
+%
+%\definecolor{codegreen}{rgb}{0,0.6,0}
+%\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+%\definecolor{codepurple}{rgb}{0.58,0,0.82}
+%\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%
+%\lstdefinestyle{mystyle}{
+%backgroundcolor=\color{backcolour},
+%commentstyle=\color{codegreen},
+%keywordstyle=\color{magenta},
+%numberstyle=\tiny\color{codegray},
+%stringstyle=\color{codepurple},
+%basicstyle=\footnotesize,
+%breakatwhitespace=false,
+%breaklines=true,
+%captionpos=b, keepspaces=true, numbers=left, numbersep=5pt, showspaces=false,
+%showstringspaces=false, showtabs=false, tabsize=2 }
+%
+%\lstset{style=mystyle}
+
+
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfauthor={Kevin Chen},
+            pdfborder={0 0 0},
+            breaklinks=true}
+
+%---------------------------------------------------------------------------
+% Typographical addendum
+%---------------------------------------------------------------------------
+\usepackage{physics}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{mathtools} \mathtoolsset{showonlyrefs}
+\usepackage{bm}
+\usepackage{textcomp,gensymb}
+\usepackage{textgreek}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\newcommand{\Prob}[2][]{ \mathbb{P}_{#1} \left\{ {#2} \right\}} % make a function for bb bold P with curly braces
+
+\newcommand{\Norm}[2][]{ \mathbf{\Phi}_{#1}\left( {#2} \right)} % make a function for bold Phi with parentheses
+
+\newcommand{\Gam}[2][]{ \mathbf{\Gamma}_{#1}\left( {#2} \right)} % make a function for bold Gamma with parentheses
+
+\newcommand{\curlyN}[2][]{ \mathcal{N}_{#1}\left( {#2} \right)} % make a function for curly N
+
+\newcommand\floor[1]{\left\lfloor{#1}\right\rfloor} % for ceiling and floor
+\newcommand\ceil[1]{\left\lceil{#1}\right\rceil}
+
+\newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for bold E
+
+\newcommand{\Var}[2][]{ \mathrm{Var}_{#1}\left( {#2} \right)} % function for Var
+
+\newcommand{\Cov}[2][]{ \mathrm{Cov}_{#1}\left( {#2} \right)} % function for Covar
+
+\newcommand{\lik}[2][]{ \mathrm{lik}_{#1}\left( {#2} \right)} % function for lik
+
+\newcommand{\odds}[2][]{ \mathrm{odds}_{#1}\left( {#2} \right)} % function for odds
+
+%\newcommand{\Tr}[1][]{ \mathrm{Tr}\left[ {#1} \right]} % function for trace
+
+\newcommand{\D}[1]{\ \mathrm{d} #1 } % function for dx
+
+\newcommand{\Xhat}{\hat{X}} % function for X hat
+
+\newcommand{\phat}{\hat{p}} % function for p hat
+
+\newcommand{\Xbar}{\bar{X}} % function for X bar
+
+\newcommand{\Real}{\mathbb{R}} % function for Real numbers
+
+\newcommand{\Bsym}[1]{ \boldsymbol{#1} } % function for bold symbols
+
+\usepackage{dsfont}
+\newcommand{\Ind}{\mathds{1}} % function for Indicator
+
+\DeclarePairedDelimiter\Abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\dis{\lVert}{\rVert}
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+
+\let\olddis\dis
+\def\dis{\@ifstar{\olddis}{\olddis*}}
+\makeatother
+
+% For typesetting the "distributed as" symbol
+% example of use:
+% X \distras{H_0} Y
+\makeatletter
+\newcommand{\distas}[1]{\mathbin{\overset{#1}{\kern\z@\sim}}}%
+\newsavebox{\mybox}\newsavebox{\mysim}
+\newcommand{\distras}[1]{%
+  \savebox{\mybox}{\hbox{\kern3pt$\scriptstyle#1$\kern3pt}}%
+  \savebox{\mysim}{\hbox{$\sim$}}%
+  \mathbin{\overset{#1}{\kern\z@\resizebox{\wd\mybox}{\ht\mysim}{$\sim$}}}%
+}
+\makeatother
+
+%---------------------------------------------------------------------------
+% Environment commands for Markdown (compatibility workaround)
+%---------------------------------------------------------------------------
+\usepackage{lscape}
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
+
+\newcommand{\bsinglespace}{\begin{singlespace}}
+\newcommand{\esinglespace}{\end{singlespace}}

@@ -1,0 +1,25 @@
+
+digraph G {
+
+graph[
+    layout=neato
+    # rankdir = "LR",
+    # nodesep = 3,
+    # splines = "true"
+    # overlap = "prism1"
+]
+
+node[shape="circle"]
+
+W1  [texlbl="$W1$", pos= "0,1!"]
+W2  [texlbl="$W2$", pos= "2,1!"]
+A   [texlbl="$A$", pos= "0,0!"]
+Y   [texlbl="$Y$", pos= "2,0!"]
+U   [texlbl="$U$", pos= "1, 1.5!"]
+
+U  -> {W1 W2 A Y}
+W1 -> {A Y}
+W2 -> {A Y}
+A  -> Y
+
+} 
