@@ -37,9 +37,12 @@
 %\numberwithin{figure}{section} % Number figures within sections
 %\numberwithin{table}{section} % Number tables within sections
 
+
 \usepackage{multicol}
 \setlength{\columnsep}{15pt}
 \newlength\Colsep
+
+\usepackage{supertabular}
 
 \usepackage{wrapfig}
 
@@ -86,6 +89,13 @@ petri}
 \usepackage{subcaption}
 \usepackage{caption}
 %\graphicspath{ {file.path.here} }
+
+% Set column widths!
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
 
 
 % STATA output for `estout` package
