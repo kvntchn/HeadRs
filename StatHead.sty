@@ -71,7 +71,6 @@
 \usepackage{longtable}
 \usepackage{xtab, booktabs}
 \usepackage{multirow}
-% \usepackage{floatrow} %interferes with longtable centering
 
 \usepackage{float}
 
@@ -149,9 +148,10 @@ petri}
             breaklinks=true}
 
 % Code chunk captions and references
-\DeclareNewFloatType{chunk}{placement=H, fileext=chk, name=}
-%\captionsetup{options=chunk}
-\renewcommand{\thechunk}{Chunk~\arabic{chunk}}
+% \usepackage{floatrow} %interferes with longtable centering
+% \DeclareNewFloatType{chunk}{placement=H, fileext=chk, name=}
+% \captionsetup{options=chunk}
+% \renewcommand{\thechunk}{Chunk~\arabic{chunk}}
 % \makeatletter
 % \@addtoreset{chunk}{section}
 % \makeatother
