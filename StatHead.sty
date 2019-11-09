@@ -74,15 +74,19 @@
 
 \usepackage{float}
 
+%\usepackage{pgf}% requires lualatex
 \usepackage{tikz}% Probability trees and flow charts and the like
-\usetikzlibrary{%
-trees,
+\usetikzlibrary{
+graphs,
+%graphdrawing,% requires lualatex
+%trees,
 arrows,
-shapes,
+%shapes,
 %decoration,
-automata,
-backgrounds,
-petri}
+automata
+%backgrounds,
+%petri
+}
 
 \usepackage{graphicx,grffile}
 \usepackage{subcaption}
