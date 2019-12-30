@@ -55,7 +55,7 @@
 % \fancyfoot[L]{}
 % \fancyfoot[C]{}
 % \fancyfoot[R]{\thepage}
-% \renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0pt}
 % \renewcommand{\footrulewidth}{0pt}
 % \setlength{\headheight}{15pt}
 
@@ -69,10 +69,12 @@
 \usepackage{linegoal}
 
 \usepackage{longtable}
+\setlength{\LTcapwidth}{\textwidth}
 \usepackage{xtab, booktabs}
 \usepackage{multirow}
+\usepackage[flushleft]{threeparttable} % Suzanne's
 
-\usepackage{float}
+\usepackage{float} % Check code chunks section for floatrow
 
 %\usepackage{pgf}% requires lualatex
 \usepackage{tikz}% Probability trees and flow charts and the like
@@ -88,9 +90,9 @@ automata
 %petri
 }
 
-\usepackage{graphicx,grffile}
-\usepackage{subcaption}
-\usepackage{caption}
+% \usepackage{graphicx,grffile}
+% \usepackage{subcaption}
+% \usepackage{caption}
 %\graphicspath{ {file.path.here} }
 
 % Set column widths in tabular environment!
@@ -152,7 +154,9 @@ automata
             breaklinks=true}
 
 % Code chunk captions and references
-% \usepackage{floatrow} %interferes with longtable centering
+% \usepackage{floatrow} %interferes with float package
+% \floatsetup[figure]{capposition=top}
+% \floatsetup[table]{capposition=top}
 % \DeclareNewFloatType{chunk}{placement=H, fileext=chk, name=}
 % \captionsetup{options=chunk}
 % \renewcommand{\thechunk}{Chunk~\arabic{chunk}}
@@ -160,6 +164,7 @@ automata
 % \@addtoreset{chunk}{section}
 % \makeatother
 
+% Usage in R
 % library(knitr)
 % oldSource <- knit_hooks$get("source")
 % knit_hooks$set(source = function(x, options) {

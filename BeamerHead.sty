@@ -5,8 +5,10 @@
 %\doublespacing
 
 %\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-%\usepackage[utf8]{inputenc}
+% \usepackage[utf8]{inputenc}
 % \usepackage{lmodern}
+\usepackage{scrextend}
+\changefontsizes{8pt}
 
 %\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 
@@ -18,6 +20,7 @@
 % \setbeamerfont{itemize/enumerate body}{size*={13}{15}}
 % \setbeamerfont{itemize/enumerate subbody}{size*={12}{14}}
 % \setbeamerfont{itemize/enumerate subsubbody}{size*={12}{14}}
+\setbeamerfont{caption}{size*={8}{10}}
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 %\usepackage{sectsty} % Allows customizing section commands
@@ -41,6 +44,7 @@
 % Tables, figures, images
 %---------------------------------------------------------------------------
 \usepackage{longtable}
+\setlength{\LTcapwidth}{\textwidth}
 \usepackage{xtab, booktabs}
 \usepackage{multirow}
 
@@ -54,48 +58,22 @@ automata,
 backgrounds,
 petri}
 
-\usepackage{graphicx,grffile}
+% \usepackage{graphicx,grffile}
+% \usepackage{caption}
+% \usepackage{subcaption}
+% \captionsetup{font=scriptsize,labelfont=scriptsize}
 %\graphicspath{ {file.path.here} }
 
-%---------------------------------------------------------------------------
-% Drawing die
-%---------------------------------------------------------------------------
+% Set column widths in tabular environment!
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
 
-\tikzset{
-  dot hidden/.style={},
-  line hidden/.style={},
-  dot colour/.style={dot hidden/.append style={color=#1}},
-  dot colour/.default=black,
-  line colour/.style={line hidden/.append style={color=#1}},
-  line colour/.default=black
-}
-
-\usepackage{xparse}
-\NewDocumentCommand{\drawdie}{O{}m}{
-
-\begin{tikzpicture}[x=1em,y=1em,radius=0.1,#1]
-  \draw[rounded corners=0.5,line hidden] (0,0) rectangle (1,1);
-  \ifodd#2
-    \fill[dot hidden] (0.5,0.5) circle;
-  \fi
-  \ifnum#2>1
-    \fill[dot hidden] (0.2,0.2) circle;
-    \fill[dot hidden] (0.8,0.8) circle;
-   \ifnum#2>3
-     \fill[dot hidden] (0.2,0.8) circle;
-     \fill[dot hidden] (0.8,0.2) circle;
-    \ifnum#2>5
-      \fill[dot hidden] (0.8,0.5) circle;
-      \fill[dot hidden] (0.2,0.5) circle;
-     \ifnum#2>7
-       \fill[dot hidden] (0.5,0.8) circle;
-       \fill[dot hidden] (0.5,0.2) circle;
-      \fi
-    \fi
-  \fi
-\fi
-\end{tikzpicture}
-}
+% Fancy fit image command with optional caption
+\usepackage{adjustbox} % Shrink stuff
+% \usepackage{showframe} % Useful for debugging
 
 %---------------------------------------------------------------------------
 % Code chunks
