@@ -92,7 +92,10 @@ automata
 
 % \usepackage{graphicx,grffile}
 % \usepackage{subcaption}
-% \usepackage{caption}
+% For tables and figures in parts %%%%
+\usepackage{caption}
+% \DeclareCaptionLabelFormat{cont}{#1~#2\alph{ContinuedFloat}}
+% \captionsetup[ContinuedFloat]{labelformat=cont}
 %\graphicspath{ {file.path.here} }
 
 % Set column widths in tabular environment!
@@ -102,16 +105,16 @@ automata
 \newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
 \newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
 
-
 % STATA output for `estout` package
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
 
 
 %---------------------------------------------------------------------------
-% Code chunks
+% Code chunks and color
 %---------------------------------------------------------------------------
 % \usepackage{cprotect}
 \usepackage{listings} % for code
+\usepackage{tcolorbox}
 \NewDocumentCommand{\framecolorbox}{oommm}
  {% #1 = width (optional)
   % #2 = inner alignment (optional)

@@ -7,20 +7,21 @@
 %\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 % \usepackage[utf8]{inputenc}
 % \usepackage{lmodern}
-\usepackage{scrextend}
-\changefontsizes{8pt}
 
 %\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 
-% \setbeamerfont{item}{size*={13}{15}}
-% \setbeamerfont{item projected}{size*={12}{14}}
-% \setbeamerfont{itemize item}{size*={13}{15}}
-% \setbeamerfont{itemize subitem}{size*={12}{14}}
-% \setbeamerfont{itemize subsubitem}{size*={12}{14}}
-% \setbeamerfont{itemize/enumerate body}{size*={13}{15}}
-% \setbeamerfont{itemize/enumerate subbody}{size*={12}{14}}
-% \setbeamerfont{itemize/enumerate subsubbody}{size*={12}{14}}
-\setbeamerfont{caption}{size*={8}{10}}
+% \setbeamerfont{item}{size*={7.5}{8}}
+% \setbeamerfont{item projected}{size*={7.5}{8}}
+% \setbeamerfont{itemize item}{size*={7.5}{8}}
+% \setbeamerfont{itemize subitem}{size*={7.5}{8}}
+% \setbeamerfont{itemize subsubitem}{size*={7.5}{8}}
+% \setbeamerfont{itemize/enumerate body}{size*={7.5}{8}}
+% \setbeamerfont{itemize/enumerate subbody}{size*={7.5}{8}}
+% \setbeamerfont{itemize/enumerate subsubbody}{size*={7.5}{8}}
+% \setbeamerfont{caption}{size*={7.5}{8}}
+% \setbeamerfont{caption name}{size*={7.5}{8}}
+% \setbeamerfont{frametitle}{size*={9}{9.5}}
+% \setbeamerfont{normal text}{size*={7.5}{8}}
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 %\usepackage{sectsty} % Allows customizing section commands
@@ -41,6 +42,11 @@
 \setbeamertemplate{footline}[page number]
 
 %---------------------------------------------------------------------------
+% Citations
+%---------------------------------------------------------------------------
+\usepackage[backend=bibtex]{biblatex}
+
+%---------------------------------------------------------------------------
 % Tables, figures, images
 %---------------------------------------------------------------------------
 \usepackage{longtable}
@@ -59,10 +65,15 @@ backgrounds,
 petri}
 
 % \usepackage{graphicx,grffile}
-% \usepackage{caption}
+% For tables and figures in parts %%%%
+\usepackage{caption}
+\DeclareCaptionLabelFormat{cont}{#1~#2\alph{ContinuedFloat}}
+\captionsetup[ContinuedFloat]{labelformat=cont}
 % \usepackage{subcaption}
 % \captionsetup{font=scriptsize,labelfont=scriptsize}
 %\graphicspath{ {file.path.here} }
+
+% \usepackage{subfloat}
 
 % Set column widths in tabular environment!
 \usepackage{array}
@@ -76,15 +87,18 @@ petri}
 % \usepackage{showframe} % Useful for debugging
 
 %---------------------------------------------------------------------------
-% Code chunks
+% Code chunks and color
 %---------------------------------------------------------------------------
 \usepackage{listings} % for code
+\usepackage{tcolorbox}
+% \usepackage[dvipsnames]{xcolor}
 \usepackage{color}
 %
-%\definecolor{codegreen}{rgb}{0,0.6,0}
-%\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-%\definecolor{codepurple}{rgb}{0.58,0,0.82}
-%\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{blueshade}{rgb}{0.171,0.255,0.255}
 %
 %\lstdefinestyle{mystyle}{
 %backgroundcolor=\color{backcolour},
