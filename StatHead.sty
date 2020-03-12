@@ -1,4 +1,9 @@
 %---------------------------------------------------------------------------
+% Kevin's style file
+%---------------------------------------------------------------------------
+\usepackage{ifxetex,ifluatex}
+
+%---------------------------------------------------------------------------
 % General
 %---------------------------------------------------------------------------
 
@@ -20,9 +25,26 @@
 
 %\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 %\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-
+% Latin Modern Roman
+% \usepackage{lmodern}
 %\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+\ifluatex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Arial (with lualatex)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage[no-math]{fontspec}
+% \setmainfont{Arial}[
+% 	Extension = .ttf,
+% 	UprightFont = *,
+% 	BoldFont = *bd,
+% 	ItalicFont = *i,
+% 	BoldItalicFont = *bi]
+\usepackage[italic]{mathastext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
+
+
 
 \usepackage{outlines}
 \usepackage{enumitem}
@@ -66,7 +88,10 @@
 % \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{xparse}
 \usepackage{xhfill}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0
+% Requires pdfTeX
 \usepackage{linegoal}
+\fi
 
 \usepackage{longtable}
 \setlength{\LTcapwidth}{\textwidth}
@@ -76,19 +101,25 @@
 
 \usepackage{float} % Check code chunks section for floatrow
 
-%\usepackage{pgf}% requires lualatex
+\ifluatex
+% requires lualatex
+\usepackage{pgf}
+\fi
 \usepackage{tikz}% Probability trees and flow charts and the like
 \usetikzlibrary{
 graphs,
-%graphdrawing,% requires lualatex
-%trees,
 arrows,
+automata
+%trees,
 %shapes,
 %decoration,
-automata
 %backgrounds,
 %petri
 }
+\ifluatex
+% requires lualatex
+\usetikzlibrary{graphdrawing}
+\fi
 
 \usepackage{graphicx}
 % \usepackage{grffile}
@@ -219,7 +250,10 @@ morekeywords={}
 % Typographical addendum
 %---------------------------------------------------------------------------
 % \usepackage{hologo}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+% TIPA (not compatible with fontspec)
 \usepackage{tipx}
+\fi
 \usepackage{marvosym,epsdice}
 \usepackage{physics}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
