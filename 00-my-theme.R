@@ -22,7 +22,7 @@ to_drive_D <- function(
 
 
 lualatex <- function(
-	pattern = "*\\.tex",
+	pattern = ".*\\.tex",
 	directory = here::here("reports"),
 	magick = T,
 	break_after = 20,
