@@ -25,11 +25,11 @@ lualatex <- function(
 	pattern = ".*\\.tex",
 	directory = here::here("reports"),
 	magick = T,
-	break_after = 20,
+	break_after = 30,
 	png_density = 400) {
 
 	dir.create(directory, F, T)
-	dir.create(paste0(gsub("/$", "", directory), "/images"), F, T)
+	if (magick) {dir.create(paste0(gsub("/$", "", directory), "/images"), F, T)}
 
 	if (!grepl("\\.tex$", pattern)) {
 		pattern <- paste0(pattern, "\\.tex")
@@ -44,11 +44,10 @@ lualatex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\"\n"),
 					paste0("for %i in (", file.tex, ") do"),
-					"lualatex $i; del %~ni.log; del %~ni.aux;",
-					ifelse(
-						magick,
-						paste0("magick -density ", png_density, " %~ni.pdf .\\images\\%~ni.png"),
-						NULL),
+					"lualatex \"$i\"; del \"%~ni.log\"; del \"%~ni.aux\";",
+					if (magick) {
+						paste0("magick -density ", png_density, " \"%~ni.pdf\" \".\\images\\%~ni.png\"")
+						} else {NULL},
 					sep = " ")), timeout = break_after)}
 		))
 	}
@@ -58,12 +57,11 @@ lualatex <- function(
 			grep(pattern, list.files(directory), value = T), function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\";"),
-					paste0("for i in ", file.tex,"; do {"),
-					"lualatex $i; rm ${i%.tex}.aux;",
-					ifelse(
-						magick,
-						paste0("magick -density ", png_density, " ${i%.tex}.pdf ./images/${i%.tex}.png;"),
-						NULL),
+					paste0("for i in \"", file.tex,"\"; do {"),
+					"lualatex \"$i\"; rm \"${i%.tex}.aux\";",
+					if (magick) {
+						paste0("magick -density ", png_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.png\";")
+						} else {NULL},
 					"} done", sep = "\n")), timeout = break_after)}
 		))
 	}
