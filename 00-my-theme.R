@@ -1,5 +1,25 @@
 # My themes and helper functions ####
+library(tidyverse)
+library(viridis)
+library(xtable)
+library(pander)
+library(tikzDevice)
+library(knitr)
 
+# Yihui's softwrap
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+	# this hook is used only when the linewidth option is not NULL
+	if (!is.null(n <- options$linewidth)) {
+		x = knitr:::split_lines(x)
+		# any lines wider than n should be wrapped
+		if (any(nchar(x) > n)) x = strwrap(x, width = n)
+		x = paste(x, collapse = '\n')
+	}
+	hook_output(x, options)
+})
+
+# Path on external drive with analogous file hierarchy
 to_drive_D <- function(
 	x,
 	drive_D = T) {
@@ -20,7 +40,7 @@ to_drive_D <- function(
 			return(x)}}
 }
 
-
+# Run LuaLaTex
 lualatex <- function(
 	pattern = ".*\\.tex",
 	directory = here::here("reports"),
@@ -67,20 +87,7 @@ lualatex <- function(
 	}
 }
 
-
-library(extrafont)
-loadfonts()
-library(ggrepel)
-# library(tikzDevice)
-
-library(ggplot2)
-library(viridis)
-library(cowplot)
-library(xtable)
-library(tikzDevice)
-
-library(knitr)
-
+# My ggplot theme for pdf
 mytheme <- theme_bw() +
 	theme(
 		axis.text = element_text(size = 6, color = "black"),
@@ -92,6 +99,7 @@ mytheme <- theme_bw() +
 		# legend.position="none"
 	)
 
+# My ggplot theme for html
 mytheme.web <- theme_bw() +
 	theme(
 		axis.text = element_text(size = 12, color = 'black'),
@@ -103,19 +111,10 @@ mytheme.web <- theme_bw() +
 		# legend.position="none"
 	)
 
+# Save default TikZ options
 tikzLualatexPackages.option <- getOption("tikzLualatexPackages")
-
+# Set TikZ Options
 options(
-	xtable.comment = F,
-	xtable.include.rownames = F,
-	xtable.booktabs = T,
-	xtable.sanitize.text.function = function(x) {
-		x
-	},
-	xtable.floating = F,
-	# floatrow does not respect H
-	xtable.table.placement = "H",
-	xtable.caption.placement = 'top',
 	tikzLatexPackages = c(
 		"\\usepackage{tikz}",
 		"\\usepackage[active,tightpage]{preview}",
@@ -123,7 +122,6 @@ options(
 		"\\setlength\\PreviewBorder{0pt}",
 		"\\usepackage{bm}"
 	),
-	knitr.kable.NA = "",
 	tikzDefaultEngine = 'luatex',
 	tikzLualatexPackages = c(
 		# "\\usepackage[utf8]{inputenc}",
@@ -147,6 +145,19 @@ options(
 	)
 )
 
+# Set xtable and kable options
+options(
+	xtable.comment = F,
+	xtable.include.rownames = F,
+	xtable.booktabs = T,
+	xtable.sanitize.text.function = function(x) {
+		x
+	},
+	xtable.floating = F,
+	# floatrow does not respect H
+	xtable.table.placement = "H",
+	xtable.caption.placement = 'top',
+	knitr.kable.NA = "")
 
-library(pander)
+# Set pander table split options
 panderOptions('table.split.table', 500)
