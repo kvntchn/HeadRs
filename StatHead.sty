@@ -1,3 +1,5 @@
+\PassOptionsToPackage{no-math}{fontspec}
+
 %---------------------------------------------------------------------------
 % Kevin's style file
 %---------------------------------------------------------------------------
@@ -22,29 +24,6 @@
 
 \usepackage{setspace}
 %\doublespacing
-
-%\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-%\usepackage[utf8]{inputenc}
-% Latin Modern Roman
-% \usepackage{lmodern}
-%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
-
-\ifluatex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For Arial (with lualatex)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \usepackage[no-math]{fontspec}
-% \setmainfont{Arial}[
-% 	Extension = .ttf,
-% 	UprightFont = *,
-% 	BoldFont = *bd,
-% 	ItalicFont = *i,
-% 	BoldItalicFont = *bi]
-\usepackage[italic]{mathastext}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fi
-
-
 
 \usepackage{outlines}
 \usepackage{enumitem}
@@ -258,13 +237,11 @@ morekeywords={}
 \usepackage{physics}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{mathtools} \mathtoolsset{showonlyrefs}
-\usepackage{bm}
-\usepackage{MnSymbol} % Extended math symbols
+\usepackage{bm} % greek no good in lualatex
+\usepackage{MnSymbol} % good-looking extended math symbols
 % \usepackage{lilyglyphs} % Extended music symbols (needs XeLaTex of LuaTex)
-\usepackage{dsfont}
-% \usepackage{pxfonts}
-% \usepackage{textcomp,gensymb,upgreek}
-% \usepackage[euler]{textgreek}
+\usepackage{dsfont} % for cool indicator
+\usepackage{textcomp} % because unicode and hyperref may have issues
 
 \makeatletter
 \newcommand*{\indep}{%
@@ -310,48 +287,17 @@ morekeywords={}
 \newcommand{\argminE}{\mathop{\mathrm{argmin}}}          % ASdeL
 \newcommand{\argminF}{\mathop{\mathrm{argmin}}\limits}   % ASdeL
 
-
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
-
-\newcommand{\Pa}[1][]{ \mathbb{P}\mathrm{a} {#1} } % make a function for bb bold Pa
-
 
 \newcommand{\Prob}[2][]{ \mathbb{P}_{#1} \left\{ {#2} \right\}} % make a function for bb bold P with curly braces
 
-\newcommand{\Norm}[2][]{ \mathbf{\Phi}_{#1}\left( {#2} \right)} % make a function for bold Phi with parentheses
-
-\newcommand{\Gam}[2][]{ \mathbf{\Gamma}_{#1}\left( {#2} \right)} % make a function for bold Gamma with parentheses
-
-\newcommand{\curlyN}[2][]{ \mathcal{N}_{#1}\left( {#2} \right)} % make a function for curly N
-
-\newcommand\floor[1]{\left\lfloor{#1}\right\rfloor} % for ceiling and floor
-\newcommand\ceil[1]{\left\lceil{#1}\right\rceil}
-
-\newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for bold E
+\newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for expectation
 
 \newcommand{\Var}[2][]{ \mathrm{Var}_{#1}\left( {#2} \right)} % function for Var
 
 \newcommand{\Cov}[2][]{ \mathrm{Cov}_{#1}\left( {#2} \right)} % function for Covar
 
 \newcommand{\lik}[2][]{ \mathrm{lik}_{#1}\left( {#2} \right)} % function for lik
-
-\newcommand{\odds}[2][]{ \mathrm{odds}_{#1}\left( {#2} \right)} % function for odds
-
-%\newcommand{\Tr}[1][]{ \mathrm{Tr}\left[ {#1} \right]} % function for trace
-
-\newcommand{\D}[1]{\ \mathrm{d} #1 } % function for dx
-
-\newcommand\givenbase[1][]{\: #1 \lvert \:}
-\let\given\givenbase
-\newcommand\sgiven{\givenbase[\delimsize]} % conditional vertical bar
-
-\newcommand{\Xhat}{\hat{X}} % function for X hat
-
-\newcommand{\phat}{\hat{p}} % function for p hat
-
-\newcommand{\Xbar}{\bar{X}} % function for X bar
-
-\newcommand{\Real}{\mathbb{R}} % function for Real numbers
 
 \newcommand{\Ind}[2][]{\mathds{1}_{#1}\left[ {#2} \right]} % function for Indicator
 
@@ -433,3 +379,39 @@ morekeywords={}
 % csl: /Users/kevinchen/Documents/computing/HeadRs/AMA.csl
 % geometry: margin=2cm, bottom=2.5cm
 % ---
+
+
+%---------------------------------------------------------------------------
+% Fonts
+%---------------------------------------------------------------------------
+
+%\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage[utf8]{inputenc}
+% Latin Modern Roman
+% \usepackage{lmodern}
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+\ifluatex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Arial (with lualatex)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[no-math]{fontspec}
+% \setmainfont{Arial}[
+% % Options below necessary for Windows
+% 	% Extension = .ttf,
+% 	% UprightFont = *,
+% 	% BoldFont = *bd,
+% 	% ItalicFont = *i,
+% 	% BoldItalicFont = *bi
+% 	]
+% In YAML
+% ---
+% mainfont: Arial
+% ---
+% \usepackage{lualatex-math}
+
+% Math as text, but numerals do not mpa well becuase
+% mathastext clahes with unicode-math
+% \usepackage[italic]{mathastext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi

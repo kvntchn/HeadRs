@@ -88,7 +88,7 @@ mytheme <- theme_bw() +
 		plot.title = element_text(size = 8),
 		legend.title = element_text(size = 8),
 		legend.text = element_text(size = 8),
-		strip.text = element_text(size = 8, margin = margin(2.5, 0, 2.5, 0, "pt"))
+		strip.text = element_text(size = 8, margin = margin(5, 5, 5, 5, "pt"))
 		# legend.position="none"
 	)
 

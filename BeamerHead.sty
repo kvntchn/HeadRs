@@ -1,3 +1,5 @@
+\usepackage{ifxetex,ifluatex}
+
 %---------------------------------------------------------------------------
 % General
 %---------------------------------------------------------------------------
@@ -34,6 +36,21 @@
 \setlength{\columnsep}{20pt}
 \newlength\Colsep
 \usepackage{wrapfig}
+
+% \ifluatex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Arial (with lualatex)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage[no-math]{fontspec}
+% \setmainfont{Arial}[
+% 	Extension = .ttf,
+% 	UprightFont = *,
+% 	BoldFont = *bd,
+% 	ItalicFont = *i,
+% 	BoldItalicFont = *bi]
+\usepackage[italic]{mathastext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \fi
 
 %---------------------------------------------------------------------------
 % Header/footer
