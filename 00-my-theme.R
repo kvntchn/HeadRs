@@ -1,6 +1,5 @@
 # My themes and helper functions ####
 library(tidyverse)
-library(viridis)
 library(xtable)
 library(pander)
 library(tikzDevice)
@@ -22,20 +21,25 @@ knit_hooks$set(output = function(x, options) {
 # Path on external drive with analogous file hierarchy
 to_drive_D <- function(
 	x,
-	drive_D = T) {
+	drive_D = T,
+	here.dir = NULL) {
+		here.dir <- gsub(".*/", "", ifelse(is.null(here.dir), here::here(), here.dir))
 	if ('drive_D' %in% ls(envir = .GlobalEnv)) {
 		drive_D <- get('drive_D', envir = .GlobalEnv)
 	}
 	if (drive_D &
 			grepl("Windows", Sys.info()['sysname'], ignore.case = T)) {
 		return(
-			gsub('/GM/', '/GM output/', gsub("C:/", "D:/", x))
+			gsub('/GM[A-Za-z-]*',
+					 paste0('/GM output/', here.dir),
+					 gsub("C:/", "D:/", x), ignore.case = T)
 		)
 	} else {
 		if (drive_D & grepl("Darwin", Sys.info()['sysname'], ignore.case = T) &
 				grepl("kevinchen", Sys.info()['login'], ignore.case = T)) {
-			gsub(".*/GM",
-					 "/Volumes/KCHEN/GM output", x)
+			gsub(".*/GM[A-Za-z-]*",
+					 paste0("/Volumes/KCHEN/GM output/",
+					 			 here.dir), x, ignore.case = T)
 		} else {
 			return(x)}}
 }
@@ -78,7 +82,7 @@ lualatex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\";"),
 					paste0("for i in \"", file.tex,"\"; do {"),
-					"lualatex \"$i\"; rm \"${i%.tex}.aux\";",
+					"lualatex \"$i\"; rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
 					if (magick) {
 						paste0("magick -density ", png_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.png\";")
 						} else {NULL},
@@ -93,9 +97,10 @@ mytheme <- theme_bw() +
 		axis.text = element_text(size = 6, color = "black"),
 		axis.title = element_text(size = 8),
 		plot.title = element_text(size = 8),
+		plot.subtitle = element_text(size = 7),
 		legend.title = element_text(size = 8),
 		legend.text = element_text(size = 8),
-		strip.text = element_text(size = 8, margin = margin(5, 5, 5, 5, "pt"))
+		strip.text = element_text(size = 8, margin = margin(2.5, 2.5, 2.5, 2.5, "pt"))
 		# legend.position="none"
 	)
 
@@ -105,6 +110,7 @@ mytheme.web <- theme_bw() +
 		axis.text = element_text(size = 12, color = 'black'),
 		axis.title = element_text(size = 12),
 		plot.title = element_text(size = 12),
+		plot.subtitle = element_text(size = 10),
 		legend.title = element_text(size = 12),
 		legend.text = element_text(size = 12),
 		strip.text = element_text(size = 12)
@@ -116,11 +122,13 @@ tikzLualatexPackages.option <- getOption("tikzLualatexPackages")
 # Set TikZ Options
 options(
 	tikzLatexPackages = c(
-		"\\usepackage{tikz}",
-		"\\usepackage[active,tightpage]{preview}",
-		"\\PreviewEnvironment{pgfpicture}",
-		"\\setlength\\PreviewBorder{0pt}",
-		"\\usepackage{bm}"
+	"\\usepackage{tikz}\n",
+	"\\usepackage[active,tightpage,psfixbb]{preview}\n",
+	"\\PreviewEnvironment{pgfpicture}\n",
+	"\\setlength\\PreviewBorder{0pt}\n",
+	# "\\input{\\string~/HeadRs/common_supplement.tex}\n",
+		# "\\input{\\string~/HeadRs/stathead.sty}\n",
+	NULL
 	),
 	tikzDefaultEngine = 'luatex',
 	tikzLualatexPackages = c(
@@ -141,7 +149,10 @@ options(
 		"\\usepackage{tikz}\n",
 		"\\usepackage[active,tightpage,psfixbb]{preview}\n",
 		"\\PreviewEnvironment{pgfpicture}\n",
-		"\\setlength\\PreviewBorder{0pt}\n"
+		"\\setlength\\PreviewBorder{0pt}\n",
+		# "\\input{\\string~/HeadRs/common_supplement.tex}\n",
+		# "\\input{\\string~/HeadRs/stathead.sty}\n",
+		NULL
 	)
 )
 
