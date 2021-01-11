@@ -45,17 +45,19 @@ to_drive_D <- function(
 }
 
 # Run LuaLaTex
-lualatex <- function(
+latex <- function(
 	pattern = ".*\\.tex",
 	directory = here::here("reports"),
 	magick = T,
 	break_after = 30,
-	png_density = 400) {
+	png_density = 400,
+	compiler = "latex",
+	compilation.options = NULL) {
 
 	dir.create(directory, F, T)
 	if (magick) {dir.create(paste0(gsub("/$", "", directory), "/images"), F, T)}
 
-	if (!grepl("\\.tex$", pattern)) {
+	if (!grepl("\\.tex$", pattern, ignore.case = T)) {
 		pattern <- paste0(pattern, "\\.tex")
 	}
 
@@ -68,7 +70,9 @@ lualatex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\"\n"),
 					paste0("for %i in (", file.tex, ") do"),
-					"lualatex \"$i\"; del \"%~ni.log\"; del \"%~ni.aux\";",
+					compiler, " ",
+					paste(compilation.options, collapse = " "),
+					" \"$i\"; del \"%~ni.log\"; del \"%~ni.aux\";",
 					if (magick) {
 						paste0("magick -density ", png_density, " \"%~ni.pdf\" \".\\images\\%~ni.png\"")
 						} else {NULL},
@@ -82,13 +86,25 @@ lualatex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\";"),
 					paste0("for i in \"", file.tex,"\"; do {"),
-					"lualatex \"$i\"; rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
+					compiler, " ",
+					paste(compilation.options, collapse = " "),
+					" \"$i\"; rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
 					if (magick) {
 						paste0("magick -density ", png_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.png\";")
 						} else {NULL},
 					"} done", sep = "\n")), timeout = break_after)}
 		))
 	}
+}
+
+lualatex <- function(
+	pattern = ".*\\.tex",
+	directory = here::here("reports"),
+	magick = T,
+	break_after = 30,
+	png_density = 400,
+	compilation.options = NULL) {
+	return(latex(pattern, directory, magick, break_after, png_density, compiler = "luatex", compilation.options))
 }
 
 # My ggplot theme for pdf

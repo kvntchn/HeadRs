@@ -26,8 +26,8 @@
 \usepackage{pgf}
 % https://tex.stackexchange.com/questions/34939/axis-with-trigonometric-labels-in-pgfplots
 \usepackage{pgfplots}
-\fi
 \pgfplotsset{compat=1.17}
+\fi
 \usepackage{tikz}% Probability trees and flow charts and the like
 \usetikzlibrary{
 graphs,
@@ -51,6 +51,9 @@ positioning
 % requires lualatex
 \usetikzlibrary{graphdrawing}
 \fi
+
+% GraphViz
+\usepackage[pdf]{graphviz}
 
 %---------------------------------------------------------------------------
 % Math supplement
@@ -116,6 +119,7 @@ positioning
 % \newcommand{\argminE}{\mathop{\mathrm{argmin}}}          % ASdeL
 % \newcommand{\argminF}{\mathop{\mathrm{argmin}}\limits}   % ASdeL
 
+% \newcommand{\myqed}{\flushright\rule{.36em}{1.5ex}}
 \newcommand{\Prob}[2][]{ \mathbb{P}_{#1} \left( {#2} \right)} % make a function for bb bold P with curly braces
 
 \newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for expectation
@@ -137,6 +141,7 @@ positioning
 %---------------------------------------------------------------------------
 % Code chunks and color
 %---------------------------------------------------------------------------
+\PassOptionsToPackage{dvipsnames}{xcolor}
 % \usepackage{cprotect}
 \usepackage{listings} % for code
 \usepackage{tcolorbox}
@@ -156,6 +161,7 @@ positioning
  }
 
 % \usepackage{color}
+\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
 %\definecolor{codegreen}{rgb}{0,0.6,0}
 %\definecolor{codegray}{rgb}{0.5,0.5,0.5}
 %\definecolor{codepurple}{rgb}{0.58,0,0.82}
