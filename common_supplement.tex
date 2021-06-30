@@ -4,6 +4,7 @@
 
 % For framing
 \usepackage{framed}
+\usepackage{calc}
 
 % wrapped figures
 \usepackage{wrapfig}
@@ -22,8 +23,8 @@
 % \makecell{Some really \\ longer text}
 
 \ifluatex
-% requires lualatex
 \usepackage{pgf}
+% requires lualatex
 % https://tex.stackexchange.com/questions/34939/axis-with-trigonometric-labels-in-pgfplots
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
@@ -43,8 +44,15 @@ positioning
 % https://tex.stackexchange.com/questions/451786/how-do-i-put-a-circle-around-a-symbol
 \usepackage{xargs}
 \newcommandx\circled[3][1=0.75, 2=0.5pt]{
-\begin{tikzpicture}[baseline=(char.base), scale = {#1}, every node/.style={scale = {#1}}]
-  \node[shape = circle, draw, inner sep = {#2}] (char) {{#3}};
+\begin{tikzpicture}[
+	baseline=(char.base), scale = {#1},
+	every node/.style={
+		scale = {#1},
+		text height={height("M")},
+		text width={height("M")},
+		outer sep = 0
+		}]
+  \node[text centered, shape = circle, draw, inner sep = {#2}] (char) {{#3}};
 \end{tikzpicture}
 	}
 \ifluatex
@@ -114,21 +122,32 @@ positioning
 % % limits underneath
 % \DeclareMathOperator*{\argminA}{arg\,min} % Jan Hlavacek
 % \DeclareMathOperator*{\argminB}{argmin}   % Jan Hlavacek
-% \DeclareMathOperator*{\argminC}{\arg\min}   % rbp
+\DeclareMathOperator*{\argmin}{\arg\min}   % rbp
 % \newcommand{\argminD}{\arg\!\min} % AlfC
-% \newcommand{\argminE}{\mathop{\mathrm{argmin}}}          % ASdeL
-% \newcommand{\argminF}{\mathop{\mathrm{argmin}}\limits}   % ASdeL
+% \newcommand{\argminE}{\mathop{\text{argmin}}}          % ASdeL
+% \newcommand{\argminF}{\mathop{\text{argmin}}\limits}   % ASdeL
+\DeclareMathOperator*{\argmax}{\arg\max}   % rbp
 
 % \newcommand{\myqed}{\flushright\rule{.36em}{1.5ex}}
 \newcommand{\Prob}[2][]{ \mathbb{P}_{#1} \left( {#2} \right)} % make a function for bb bold P with curly braces
 
 \newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for expectation
 
-\newcommand{\Var}[2][]{ \mathrm{Var}_{#1}\left( {#2} \right)} % function for Var
+\newcommand{\Var}[2][]{\text{var}_{#1}\left( {#2} \right)} % function for Var
 
-\newcommand{\Cov}[2][]{ \mathrm{Cov}_{#1}\left( {#2} \right)} % function for Covar
+\newcommand{\Cov}[2][]{\text{cov}_{#1}\left( {#2} \right)} % function for Covar
 
-\newcommand{\lik}[2][]{ \mathrm{lik}_{#1}\left( {#2} \right)} % function for lik
+\newcommand{\lik}[2][]{\text{lik}_{#1}\left( {#2} \right)} % function for lik
+
+\newcommand{\bias}[2][]{\text{bias}_{#1}\left( {#2} \right)} % function for bias
+
+\newcommand{\tr}[2][]{\text{tr}_{#1}\left( {#2} \right)} % function for trace
+
+\newcommand{\rss}[2][]{\textsc{rss}_{#1}\left( {#2} \right)} % function for RSS
+
+\newcommand{\tss}[2][]{\textsc{tss}_{#1}\left( {#2} \right)} % function for TSS
+
+\newcommand{\diag}[2][]{\text{diag}_{#1}\left( {#2} \right)} % function for diag
 
 \newcommand{\Ind}[2][]{\mathds{1}_{#1}\left[ {#2} \right]} % function for Indicator
 
@@ -162,8 +181,8 @@ positioning
 
 % \usepackage{color}
 \definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
-%\definecolor{codegreen}{rgb}{0,0.6,0}
-%\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
 %\definecolor{codepurple}{rgb}{0.58,0,0.82}
 %\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 %
@@ -226,18 +245,19 @@ numbers=left,
 numberstyle=\ttfamily\color{gray}\footnotesize,
 stepnumber=1,
 numbersep=5pt,
+xleftmargin=\parindent,
 backgroundcolor=\color{white},
 showspaces=false,
 showstringspaces=false,
 showtabs=false,
-frame=single,
+frame=none, %single,
 tabsize=2,
 captionpos=b,
-breaklines=true,
+breaklines=false, %true,
 breakatwhitespace=false,
 % title=\lstname,
 escapeinside={},
-keywordstyle=\ttfamily\color{green},
+keywordstyle=\ttfamily\color{codegreen},
 stringstyle=\ttfamily\color{mauve},
 identifierstyle=\color{blue},
 morekeywords={}

@@ -23,7 +23,7 @@ to_drive_D <- function(
 	x,
 	drive_D = T,
 	here.dir = NULL) {
-		here.dir <- gsub(".*/", "", ifelse(is.null(here.dir), here::here(), here.dir))
+	here.dir <- gsub(".*/", "", ifelse(is.null(here.dir), here::here(), here.dir))
 	if ('drive_D' %in% ls(envir = .GlobalEnv)) {
 		drive_D <- get('drive_D', envir = .GlobalEnv)
 	}
@@ -70,12 +70,13 @@ latex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\"\n"),
 					paste0("for %i in (", file.tex, ") do"),
-					compiler, " ",
-					paste(compilation.options, collapse = " "),
-					" \"$i\"; del \"%~ni.log\"; del \"%~ni.aux\";",
+					paste0(compiler, " ",
+								 paste(compilation.options, collapse = " "),
+								 " \"$i\""),
+					"; del \"%~ni.log\"; del \"%~ni.aux\";",
 					if (magick) {
 						paste0("magick -density ", png_density, " \"%~ni.pdf\" \".\\images\\%~ni.png\"")
-						} else {NULL},
+					} else {NULL},
 					sep = " ")), timeout = break_after)}
 		))
 	}
@@ -86,12 +87,12 @@ latex <- function(
 				file.tex) {system((paste(
 					paste0("cd \"", directory, "\";"),
 					paste0("for i in \"", file.tex,"\"; do {"),
-					compiler, " ",
-					paste(compilation.options, collapse = " "),
-					" \"$i\"; rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
+					paste0(compiler, " ", paste(compilation.options, collapse = " "),
+								 "\"$i\";"),
+					"rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
 					if (magick) {
 						paste0("magick -density ", png_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.png\";")
-						} else {NULL},
+					} else {NULL},
 					"} done", sep = "\n")), timeout = break_after)}
 		))
 	}
@@ -104,19 +105,20 @@ lualatex <- function(
 	break_after = 30,
 	png_density = 400,
 	compilation.options = NULL) {
-	return(latex(pattern, directory, magick, break_after, png_density, compiler = "luatex", compilation.options))
+	return(latex(pattern, directory, magick, break_after, png_density, compiler = "lualatex", compilation.options))
 }
 
 # My ggplot theme for pdf
 mytheme <- theme_bw() +
 	theme(
-		axis.text = element_text(size = 6, color = "black"),
-		axis.title = element_text(size = 8),
-		plot.title = element_text(size = 8),
-		plot.subtitle = element_text(size = 7),
-		legend.title = element_text(size = 8),
-		legend.text = element_text(size = 8),
-		strip.text = element_text(size = 8, margin = margin(2.5, 2.5, 2.5, 2.5, "pt"))
+		axis.text = element_text(size = 7, color = "black"),
+		axis.title = element_text(size = 9),
+		plot.title = element_text(size = 9),
+		plot.subtitle = element_text(size = 8),
+		legend.title = element_text(size = 9),
+		legend.text = element_text(size = 9),
+		plot.caption = element_text(size = 7),
+		strip.text = element_text(size = 9, margin = margin(2.5, 2.5, 2.5, 2.5, "pt"))
 		# legend.position="none"
 	)
 
@@ -129,6 +131,7 @@ mytheme.web <- theme_bw() +
 		plot.subtitle = element_text(size = 10),
 		legend.title = element_text(size = 12),
 		legend.text = element_text(size = 12),
+		plot.caption = element_text(size = 10),
 		strip.text = element_text(size = 12)
 		# legend.position="none"
 	)
@@ -138,13 +141,13 @@ tikzLualatexPackages.option <- getOption("tikzLualatexPackages")
 # Set TikZ Options
 options(
 	tikzLatexPackages = c(
-	"\\usepackage{tikz}\n",
-	"\\usepackage[active,tightpage,psfixbb]{preview}\n",
-	"\\PreviewEnvironment{pgfpicture}\n",
-	"\\setlength\\PreviewBorder{0pt}\n",
-	# "\\input{\\string~/HeadRs/common_supplement.tex}\n",
+		"\\usepackage{tikz}\n",
+		"\\usepackage[active,tightpage,psfixbb]{preview}\n",
+		"\\PreviewEnvironment{pgfpicture}\n",
+		"\\setlength\\PreviewBorder{0pt}\n",
+		# "\\input{\\string~/HeadRs/common_supplement.tex}\n",
 		# "\\input{\\string~/HeadRs/stathead.sty}\n",
-	NULL
+		NULL
 	),
 	tikzDefaultEngine = 'luatex',
 	tikzLualatexPackages = c(
