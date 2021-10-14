@@ -50,7 +50,8 @@ latex <- function(
 	directory = here::here("reports"),
 	magick = T,
 	break_after = 30,
-	png_density = 400,
+	img_density = 400,
+	img_format = "png",
 	compiler = "latex",
 	compilation.options = NULL) {
 
@@ -75,7 +76,7 @@ latex <- function(
 								 " \"$i\""),
 					"; del \"%~ni.log\"; del \"%~ni.aux\";",
 					if (magick) {
-						paste0("magick -density ", png_density, " \"%~ni.pdf\" \".\\images\\%~ni.png\"")
+						paste0("magick -density ", img_density, " \"%~ni.pdf\" \".\\images\\%~ni.", img_format, "\"")
 					} else {NULL},
 					sep = " ")), timeout = break_after)}
 		))
@@ -91,7 +92,7 @@ latex <- function(
 								 "\"$i\";"),
 					"rm \"${i%.tex}.aux\"; rm \"${i%.tex}.log\"; rm \"${i%.tex}.out\";",
 					if (magick) {
-						paste0("magick -density ", png_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.png\";")
+						paste0("magick -density ", img_density, " \"${i%.tex}.pdf\" \"./images/${i%.tex}.", img_format, "\";")
 					} else {NULL},
 					"} done", sep = "\n")), timeout = break_after)}
 		))
@@ -103,9 +104,10 @@ lualatex <- function(
 	directory = here::here("reports"),
 	magick = T,
 	break_after = 30,
-	png_density = 400,
+	img_density = 400,
+	img_format = "png",
 	compilation.options = NULL) {
-	return(latex(pattern, directory, magick, break_after, png_density, compiler = "lualatex", compilation.options))
+	return(latex(pattern, directory, magick, break_after, img_density, img_format, compiler = "lualatex", compilation.options))
 }
 
 # My ggplot theme for pdf
