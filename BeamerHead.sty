@@ -32,6 +32,9 @@
 	\raisebox{0.15\height}{$\vcenter{\hbox{\scalebox{0.5}{
 	\usebeamercolor[fg]{structure} $\blacktriangleright$}}}$}}
 
+% Small font in shaded environment
+\renewenvironment{Shaded}{\begin{snugshade}\small}{\end{snugshade}}
+
 %\usepackage{sectsty} % Allows customizing section commands
 %\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
 %\numberwithin{equation}{section} % Number equations within sections
@@ -62,15 +65,15 @@
 \usepackage{xtab, booktabs}
 \usepackage{multirow}
 
-\usepackage{tikz}% Probability trees and flow charts and the like
-\usetikzlibrary{%
-trees,
-arrows,
-shapes,
-%decoration,
-automata,
-backgrounds,
-petri}
+% \usepackage{tikz}% Probability trees and flow charts and the like
+% \usetikzlibrary{%
+% trees,
+% arrows,
+% shapes,
+% %decoration,
+% automata,
+% backgrounds,
+% petri}
 
 % Witin cell wrapping
 % https://tex.stackexchange.com/questions/2441/how-to-add-a-forced-line-break-inside-a-table-cell

@@ -151,6 +151,14 @@ positioning
 
 \newcommand{\Ind}[2][]{\mathds{1}_{#1}\left[ {#2} \right]} % function for Indicator
 
+% new \oset macro:
+\makeatletter
+\newcommand{\oset}[3][0.1ex]{%
+  \mathrel{\mathop{#3}\limits^{
+    \vbox to#1{\kern-2\ex@
+    \hbox{$\scriptstyle#2$}\vss}}}}
+\makeatother
+
 % Stacked lines (within line stacking)
 \usepackage{stackengine}
 \def\stackalignment{l}

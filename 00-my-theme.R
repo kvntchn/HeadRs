@@ -38,8 +38,9 @@ to_drive_D <- function(
 		if (drive_D & grepl("Darwin", Sys.info()['sysname'], ignore.case = T) &
 				grepl("kevinchen", Sys.info()['login'], ignore.case = T)) {
 			gsub(".*/GM[A-Za-z-]*",
-					 paste0("/Volumes/KCHEN/GM output/",
-					 			 here.dir), x, ignore.case = T)
+					 paste0(ifelse(dir.exists("/Volumes/KCHEN/GM output/"), "/Volumes/KCHEN/GM output/",""),
+					 			 here.dir,
+					 			 ifelse(dir.exists("/Volumes/KCHEN/GM output/"), "","/private")), x, ignore.case = T)
 		} else {
 			return(x)}}
 }
@@ -113,13 +114,13 @@ lualatex <- function(
 # My ggplot theme for pdf
 mytheme <- theme_bw() +
 	theme(
-		axis.text = element_text(size = 7, color = "black"),
+		axis.text = element_text(size = 8, color = "black"),
 		axis.title = element_text(size = 9),
 		plot.title = element_text(size = 9),
 		plot.subtitle = element_text(size = 8),
 		legend.title = element_text(size = 9),
 		legend.text = element_text(size = 9),
-		plot.caption = element_text(size = 7),
+		plot.caption = element_text(size = 8),
 		strip.text = element_text(size = 9, margin = margin(2.5, 2.5, 2.5, 2.5, "pt"))
 		# legend.position="none"
 	)
@@ -137,6 +138,40 @@ mytheme.web <- theme_bw() +
 		strip.text = element_text(size = 12)
 		# legend.position="none"
 	)
+
+# https://github.com/clauswilke/dviz.supp/blob/master/R/align_legend.R
+align_legend <- function(p, hjust = 0.5) {
+	# extract legend
+	g <- cowplot::plot_to_gtable(p)
+	grobs <- g$grobs
+	legend_index <- which(sapply(grobs, function(x) x$name) == "guide-box")
+	legend <- grobs[[legend_index]]
+
+	# extract guides table
+	guides_index <- which(sapply(legend$grobs, function(x) x$name) == "layout")
+
+	# there can be multiple guides within one legend box
+	for (gi in guides_index) {
+		guides <- legend$grobs[[gi]]
+
+		# add extra column for spacing
+		# guides$width[5] is the extra spacing from the end of the legend text
+		# to the end of the legend title. If we instead distribute it by `hjust:(1-hjust)` on
+		# both sides, we get an aligned legend
+		spacing <- guides$width[5]
+		guides <- gtable::gtable_add_cols(guides, hjust*spacing, 1)
+		guides$widths[6] <- (1-hjust)*spacing
+		title_index <- guides$layout$name == "title"
+		guides$layout$l[title_index] <- 2
+
+		# reconstruct guides and write back
+		legend$grobs[[gi]] <- guides
+	}
+
+	# reconstruct legend and write back
+	g$grobs[[legend_index]] <- legend
+	g
+}
 
 # Save default TikZ options
 tikzLualatexPackages.option <- getOption("tikzLualatexPackages")
@@ -193,3 +228,4 @@ options(
 
 # Set pander table split options
 panderOptions('table.split.table', 500)
+panderOptions('table.split.cells', 40)
