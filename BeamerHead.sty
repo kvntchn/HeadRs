@@ -32,8 +32,11 @@
 	\raisebox{0.15\height}{$\vcenter{\hbox{\scalebox{0.5}{
 	\usebeamercolor[fg]{structure} $\blacktriangleright$}}}$}}
 
-% Small font in shaded environment
-\renewenvironment{Shaded}{\begin{snugshade}\small}{\end{snugshade}}
+% sans serif math accents
+\usepackage{sansmathaccent}
+
+% % Small font in shaded environment
+% \renewenvironment{Shaded}{\begin{snugshade}\small}{\end{snugshade}}
 
 %\usepackage{sectsty} % Allows customizing section commands
 %\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
@@ -112,3 +115,12 @@
 %---------------------------------------------------------------------------
 \usepackage{bbm} % more BB
 \input{\string~/HeadRs/common_supplement.tex}
+
+% https://tex.stackexchange.com/questions/136143/tikz-animated-figure-in-beamer
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+}

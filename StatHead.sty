@@ -31,7 +31,7 @@
 \usepackage{enumitem} % more powerful than enumerate
 % \setenumerate[4]{label=\alph*).}
 
-\setlength\parindent{0pt} % Removes all indentation from paragraphs
+% \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 \usepackage{sectsty} % Allows customizing section commands
 % \renewcommand{\thesection}{\Alph{section}} % Lettered, not numbered sections
@@ -66,7 +66,7 @@
 
 \usepackage{graphicx}
 % \usepackage{grffile}
-% \usepackage{subcaption}
+\usepackage{subcaption}
 % For tables and figures in parts %%%%
 \usepackage{caption}
 % \DeclareCaptionLabelFormat{cont}{#1~#2\alph{ContinuedFloat}}
@@ -79,29 +79,31 @@
 \newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
 \newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
 \newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+% \begin{booktabs}{| L{6em} | C{6em} C{6em} C{6em} |}
 
 % STATA output for `estout` package
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
 
-%---------------------------------------------------------------------------
-% Header/footer
-%---------------------------------------------------------------------------
-\usepackage{fancyhdr}
-\pagestyle{fancyplain}
-\fancyhead[L]{}
-\fancyhead[C]{}
-\fancyhead[R]{}
-% \fancyfoot[L]{}
-% \fancyfoot[C]{}
-% \fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0pt}
-% \renewcommand{\footrulewidth}{0pt}
-\setlength{\headheight}{14.5pt}
+% %---------------------------------------------------------------------------
+% % Header/footer
+% %---------------------------------------------------------------------------
+% \usepackage{fancyhdr}
+% \pagestyle{fancyplain}
+% \fancyhead[L]{}
+% \fancyhead[C]{}
+% \fancyhead[R]{}
+% % \fancyfoot[L]{}
+% % \fancyfoot[C]{}
+% % \fancyfoot[R]{\thepage}
+% \renewcommand{\headrulewidth}{0pt}
+% % \renewcommand{\footrulewidth}{0pt}
+% \setlength{\headheight}{14.5pt}
 
 %---------------------------------------------------------------------------
 % Supplement (compatible for Beamer and Article)
 %---------------------------------------------------------------------------
 \input{\string~/HeadRs/common_supplement.tex}
+\input{\string~/HeadRs/math_supplement.tex}
 
 %---------------------------------------------------------------------------
 % Bibliography
@@ -148,7 +150,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For Arial (with lualatex)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[no-math]{fontspec}
+% \usepackage[no-math]{fontspec}
 % \setmainfont{Arial}[
 % % Options below necessary for Windows
 % 	% Extension = .ttf,

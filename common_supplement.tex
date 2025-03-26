@@ -3,7 +3,7 @@
 %---------------------------------------------------------------------------
 
 % For framing
-\usepackage{framed}
+% \usepackage{framed}
 \usepackage{calc}
 
 % wrapped figures
@@ -15,7 +15,7 @@
 \renewcommand\theadset{\def\arraystretch{.85}}%
 \renewcommand\cellset{\def\arraystretch{.85}}%
 \renewcommand\theadalign{bc}
-\renewcommand\theadfont{\bfseries}
+\renewcommand\theadfont{}
 \renewcommand\theadgape{\Gape[4pt]}
 \renewcommand\cellgape{\Gape[4pt]}
 % Usage
@@ -27,17 +27,18 @@
 % requires lualatex
 % https://tex.stackexchange.com/questions/34939/axis-with-trigonometric-labels-in-pgfplots
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.17}
+%\pgfplotsset{compat=1.17}
 \fi
 \usepackage{tikz}% Probability trees and flow charts and the like
 \usetikzlibrary{
 graphs,
 arrows,
 automata,
+shadings,
 %trees,
 %shapes,
-decorations,
-positioning
+% decorations,
+% positioning
 %backgrounds,
 %petri
 }
@@ -56,114 +57,7 @@ positioning
 \end{tikzpicture}
 	}
 \ifluatex
-% requires lualatex
-\usetikzlibrary{graphdrawing}
 \fi
-
-% GraphViz
-\usepackage[pdf]{graphviz}
-
-%---------------------------------------------------------------------------
-% Math supplement
-%---------------------------------------------------------------------------
-% \usepackage{hologo}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-% TIPA (not compatible with fontspec)
-\usepackage{tipx}
-\fi
-\usepackage{amsmath,amsfonts,amsthm,amssymb}
-\usepackage{mathtools} %\mathtoolsset{showonlyrefs} % showonlyrefs removes equation numbers
-\usepackage{bm} % greek no good in lualatex
-% \usepackage{physics}
-% \usepackage{marvosym,epsdice}
-% \usepackage{MnSymbol} % good-looking extended math symbols
-% \usepackage{lilyglyphs} % Extended music symbols (needs XeLaTex of LuaTex)
-\usepackage{dsfont} % for cool indicator
-\usepackage{textcomp} % because unicode and hyperref may have issues
-
-% https://tex.stackexchange.com/questions/174118/not-independent-sign-in-latex
-\makeatletter
-\newcommand*{\indep}{%
-  \mathbin{%
-    \mathpalette{\@indep}{}%
-  }%
-}
-\newcommand*{\nindep}{%
-  \mathbin{%                   % The final symbol is a binary math operator
-    \mathpalette{\@indep}{\not}% \mathpalette helps for the adaptation
-                               % of the symbol to the different math styles.
-  }%
-}
-\newcommand*{\@indep}[2]{%
-  % #1: math style
-  % #2: empty or \not
-  \sbox0{$#1\perp\m@th$}%        box 0 contains \perp symbol
-  \sbox2{$#1=$}%                 box 2 for the height of =
-  \sbox4{$#1\vcenter{}$}%        box 4 for the height of the math axis
-  \rlap{\copy0}%                 first \perp
-  \dimen@=\dimexpr\ht2-\ht4-.2pt\relax
-      % The equals symbol is centered around the math axis.
-      % The following equations are used to calculate the
-      % right shift of the second \perp:
-      % [1] ht(equals) - ht(math_axis) = line_width + 0.5 gap
-      % [2] right_shift(second_perp) = line_width + gap
-      % The line width is approximated by the default line width of 0.4pt
-  \kern\dimen@
-	\ifx\\#2\\%
-  \else
-    \hbox to \wd2{\hss$#1#2\m@th$\hss}%
-    \kern-\wd2 %
-  \fi
-  \kern\dimen@
-  \copy0 %                       second \perp
-}
-\makeatother
-
-% % limits underneath
-% \DeclareMathOperator*{\argminA}{arg\,min} % Jan Hlavacek
-% \DeclareMathOperator*{\argminB}{argmin}   % Jan Hlavacek
-\DeclareMathOperator*{\argmin}{\arg\min}   % rbp
-% \newcommand{\argminD}{\arg\!\min} % AlfC
-% \newcommand{\argminE}{\mathop{\text{argmin}}}          % ASdeL
-% \newcommand{\argminF}{\mathop{\text{argmin}}\limits}   % ASdeL
-\DeclareMathOperator*{\argmax}{\arg\max}   % rbp
-
-% \newcommand{\myqed}{\flushright\rule{.36em}{1.5ex}}
-\newcommand{\Prob}[2][]{ \mathbb{P}_{#1} \left( {#2} \right)} % make a function for bb bold P with curly braces
-
-\newcommand{\E}[2][]{ \mathbb{E}_{#1}\left[ {#2} \right]} % make a function for expectation
-
-\newcommand{\Var}[2][]{\text{var}_{#1}\left( {#2} \right)} % function for Var
-
-\newcommand{\Cov}[2][]{\text{cov}_{#1}\left( {#2} \right)} % function for Covar
-
-\newcommand{\lik}[2][]{\text{lik}_{#1}\left( {#2} \right)} % function for lik
-
-\newcommand{\bias}[2][]{\text{bias}_{#1}\left( {#2} \right)} % function for bias
-
-\newcommand{\tr}[2][]{\text{tr}_{#1}\left( {#2} \right)} % function for trace
-
-\newcommand{\rss}[2][]{\textsc{rss}_{#1}\left( {#2} \right)} % function for RSS
-
-\newcommand{\tss}[2][]{\textsc{tss}_{#1}\left( {#2} \right)} % function for TSS
-
-\newcommand{\diag}[2][]{\text{diag}_{#1}\left( {#2} \right)} % function for diag
-
-\newcommand{\Ind}[2][]{\mathds{1}_{#1}\left[ {#2} \right]} % function for Indicator
-
-% new \oset macro:
-\makeatletter
-\newcommand{\oset}[3][0.1ex]{%
-  \mathrel{\mathop{#3}\limits^{
-    \vbox to#1{\kern-2\ex@
-    \hbox{$\scriptstyle#2$}\vss}}}}
-\makeatother
-
-% Stacked lines (within line stacking)
-\usepackage{stackengine}
-\def\stackalignment{l}
-% Usage
-% \addstackgap[2pt]{\stackanchor[2.5pt]{Temper force}{with humanity}}
 
 %---------------------------------------------------------------------------
 % Code chunks and color
@@ -171,7 +65,7 @@ positioning
 \PassOptionsToPackage{dvipsnames}{xcolor}
 % \usepackage{cprotect}
 \usepackage{listings} % for code
-\usepackage{tcolorbox}
+\usepackage[many]{tcolorbox}
 \usepackage{xparse} % need for NewDocumentCommand
 \NewDocumentCommand{\framecolorbox}{oommm}
  {% #1 = width (optional)

@@ -1,0 +1,73 @@
+modifyLineBreaks:
+  preserveBlankLines: 1
+  textWrapOptions:
+    columns: 60
+    multipleSpacesToSingle: 1
+    when: before # before/after
+    comments:
+      wrap: 0 # 0/1
+      inheritLeadingSpace: 0 # 0/1
+    blocksFollow:
+      headings: 1 # 0/1
+      commentOnPreviousLine: 1 # 0/1
+      par: 1 # 0/1
+      blankLine: 1 # 0/1
+      verbatim: 1 # 0/1
+      filecontents: 1 # 0/1
+      other: \\\]|\\item(?:\h|\[) # regex
+    blocksBeginWith:
+      A-Z: 1 # 0/1
+      a-z: 1 # 0/1
+      0-9: 1 # 0/1
+      # other: \\ # regex
+    blocksEndBefore:
+      commentOnOwnLine: 1 # 0/1
+      verbatim: 1 # 0/1
+      filecontents: 1 # 0/1
+      other: \\begin\{|\\\[|\\end\{|\\\\ # regex
+    huge: overflow # forbid mid-word line breaks
+    separator: ""
+indentPreamble: 0
+defaultIndent: "  "
+maximumIndentation: "          "
+verbatimEnvironments:
+  verbatim: 1
+  lstlisting: 1
+  minted: 1
+lookForAlignDelims:
+  tabular:
+    delims: 1
+    alignDoubleBackSlash: 1
+    spacesBeforeDoubleBackSlash: 1
+    multiColumnGrouping: 0
+    alignRowsWithoutMaxDelims: 1
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+    justification: left
+    alignFinalDoubleBackSlash: 1
+    dontMeasure: 0
+    delimiterRegEx: (?<!\\)(&)
+    delimiterJustification: left
+    lookForChildCodeBlocks: 1
+    alignContentAfterDoubleBackSlash: 0
+    spacesAfterDoubleBackSlash: 1
+  tabularx:
+    delims: 1
+  longtable: 1
+noAdditionalIndent:
+  aligned: 1
+lookForAlignDelims:
+   aligned: 
+      spacesBeforeAmpersand:
+        leadingBlankColumn: 3
+        default: 0
+indentAfterItems:
+  itemize: 1
+  itemize*: 1
+  enumerate: 1
+  enumerate*: 1
+  description: 1
+  description*: 1
+  list: 1
+  rSubsection: 1
+  rSection: 1
